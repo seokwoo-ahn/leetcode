@@ -8,15 +8,15 @@ func findSubsequences(nums []int) [][]int {
 func backtrack(nums []int, index int, sequence []int, result *[][]int){
     if index == len(nums){
         if len(sequence) > 1 {
-			newSequence := make([]int, len(sequence))
-			copy(newSequence, sequence)
-			*result = append(*result, newSequence)
+			*result = append(*result, sequence)
         }
         return
     }
      
     if len(sequence) == 0 || sequence[len(sequence) - 1] <= nums[index] {
-        backtrack(nums, index+1, append(sequence, nums[index]), result)
+        newSequence := make([]int, len(sequence))
+		copy(newSequence, sequence)
+		backtrack(nums, index+1, append(newSequence, nums[index]), result)
     }
     
     if len(sequence) > 0 && sequence[len(sequence) - 1] == nums[index] {
