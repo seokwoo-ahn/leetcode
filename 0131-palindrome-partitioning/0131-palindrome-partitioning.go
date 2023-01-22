@@ -21,9 +21,7 @@ func findPalindrome(s string, index int, substring string, palindrome []string, 
 
 	candidate := substring + string(s[index])
 	if isPalindrome(candidate) {
-		tempPalindrome := make([]string, len(palindrome))
-		copy(tempPalindrome, palindrome)
-		tempPalindrome = append(tempPalindrome, candidate)
+        tempPalindrome := append(palindrome, candidate)
 		findPalindrome(s, index+1, "", tempPalindrome, result)
 	}
 	findPalindrome(s, index+1, candidate, palindrome, result)
