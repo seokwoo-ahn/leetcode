@@ -13,5 +13,5 @@ func mySqrt(x int) int {
         }
     }
     
-    return first - 1
+    return last
 }
