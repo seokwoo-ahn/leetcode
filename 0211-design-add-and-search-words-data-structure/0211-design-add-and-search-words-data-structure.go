@@ -28,7 +28,7 @@ func (this *WordDictionary) Search(word string) bool {
         if word[i] == '.' {
             for j := 0; j < 26; j++ {
                 if cur.letter[j] != nil {
-                    if cur.letter[j].Search(word[i+1:]) == true {
+                    if cur.letter[j].Search(word[i+1:]) {
                         return true
                     }
                 }
@@ -41,10 +41,8 @@ func (this *WordDictionary) Search(word string) bool {
         }
         cur = cur.letter[word[i] - 'a']
     }
-    if cur.end == true {
-        return true
-    }
-    return false
+    
+    return cur.end
 }
 
 
