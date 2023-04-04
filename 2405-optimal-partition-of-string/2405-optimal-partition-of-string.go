@@ -1,15 +1,15 @@
 func partitionString(s string) int {
     res := 1
-    m := make(map[byte]bool)
+    m := make([]bool, 26)
     idx := 0
     
     for idx < len(s) {
         b := s[idx]
-        if m[b] {
-            m = make(map[byte]bool)
+        if m[b - 'a'] {
+            m = make([]bool, 26)
             res++
         }
-        m[b] = true
+        m[b - 'a'] = true
         idx++
     }
 
