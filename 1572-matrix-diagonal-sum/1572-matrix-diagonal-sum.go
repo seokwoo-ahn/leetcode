@@ -1,11 +1,12 @@
 func diagonalSum(mat [][]int) int {
     sum := 0
-    for i := 0; i < len(mat); i++ {
-        sum += mat[i][i] + mat[i][len(mat) - i - 1]
+    length := len(mat)
+    for i := 0; i < length; i++ {
+        sum += mat[i][i] + mat[i][length - i - 1]
     }
     
-    if len(mat)%2 != 0 {
-        sum -= mat[len(mat)/2][len(mat)/2]
+    if length%2 != 0 {
+        sum -= mat[length/2][length/2]
     }
     return sum
 }
