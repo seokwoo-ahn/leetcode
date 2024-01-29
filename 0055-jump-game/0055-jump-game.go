@@ -1,8 +1,4 @@
 func canJump(nums []int) bool {
-    if len(nums) == 1 {
-        return true
-    }
-    
     maxIndex := 0
     for i := 0; i < len(nums) - 1; i++ {
         if i + nums[i] > maxIndex {
@@ -15,5 +11,5 @@ func canJump(nums []int) bool {
             return false
         }
     }
-    return false
+    return true
 }
