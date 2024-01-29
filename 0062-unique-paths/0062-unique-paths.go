@@ -1,21 +1,16 @@
-import "math/big"
-
 func uniquePaths(m int, n int) int {
-    res := big.NewInt(1)
-    if m > n {
-        for i := m+n-2; i > m - 1; i-- {
-            res = new(big.Int).Mul(res, big.NewInt(int64(i)))
-        }
-        for i := n - 1; i > 1; i-- {
-            res = new(big.Int).Div(res, big.NewInt(int64(i)))
-        }
-    } else {
-        for i := m+n-2; i > n - 1; i-- {
-            res = new(big.Int).Mul(res, big.NewInt(int64(i)))
-        }
-        for i := m - 1; i > 1; i-- {
-            res = new(big.Int).Div(res, big.NewInt(int64(i)))
+    root := make([][]int, m)
+    for i := 0; i < m; i++ {
+        root[i] = make([]int, n)
+        for j := 0; j < n; j++ {
+            root[i][j] = 1
         }
     }
-    return int(res.Int64())
+    
+    for i := 1; i < m; i++ {
+        for j := 1; j < n; j++ {
+            root[i][j] = root[i-1][j] + root[i][j-1]
+        }
+    }
+    return root[m-1][n-1]
 }
