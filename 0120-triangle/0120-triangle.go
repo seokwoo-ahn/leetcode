@@ -1,5 +1,3 @@
-import "fmt"
-
 func minimumTotal(triangle [][]int) int {
     height := len(triangle)
     triSum := make([][]int, height)
@@ -28,8 +26,6 @@ func minimumTotal(triangle [][]int) int {
             }
         }
     }
-    
-    fmt.Println(triSum)
     
     return res
 }
