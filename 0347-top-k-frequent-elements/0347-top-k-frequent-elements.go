@@ -1,5 +1,3 @@
-import "fmt"
-
 func topKFrequent(nums []int, k int) []int {
     sort.Ints(nums)
     
