@@ -18,9 +18,8 @@ func push(heap *[]int, v int) {
     convertMaxHeapAfterPush(heap, idx)
 }
 
-func convertMaxHeapAfterPush(heap *[]int, idx int) { // 포인터로 변경
+func convertMaxHeapAfterPush(heap *[]int, idx int) {
     if idx == 0 {
-        convertMaxHeapAfterPop(heap, idx)
         return
     }
     
@@ -41,7 +40,7 @@ func pop(heap *[]int) int {
     return v
 }
 
-func convertMaxHeapAfterPop(heap *[]int, idx int) { // 포인터로 변경
+func convertMaxHeapAfterPop(heap *[]int, idx int) {
     parent := idx
     leftChild := idx*2 + 1 // 수정
     rightChild := idx*2 + 2 // 수정
