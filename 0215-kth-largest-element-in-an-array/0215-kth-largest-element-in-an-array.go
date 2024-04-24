@@ -1,67 +1,63 @@
 func findKthLargest(nums []int, k int) int {
-    heap := make([]int, 0)
+    var heap MaxHeap
+    heap = make([]int, 0)
     
     for i := 0; i < len(nums); i++ {
-        push(&heap, nums[i])
+        (&heap).push(nums[i])
     }
     
     res := 0
     for i := 0; i < k; i++ {
-        res = pop(&heap)
+        res = (&heap).pop()
     }
     return res
 }
 
-func push(heap *[]int, v int) {
-    idx := len(*heap)
-    *heap = append(*heap, v)
-    convertMaxHeapAfterPush(heap, idx)
-}
+type MaxHeap []int
 
-func convertMaxHeapAfterPush(heap *[]int, idx int) {
-    if idx == 0 {
-        return
-    }
-    
-    parent := (idx-1)/2
-    child := idx
-    
-    if (*heap)[parent] < (*heap)[child] {
-        swap(&(*heap)[parent], &(*heap)[child])
-        convertMaxHeapAfterPush(heap, parent)
-    }
-}
+func (h *MaxHeap) push(v int) {
+    *h = append(*h, v)
+    index := len(*h) - 1
 
-func pop(heap *[]int) int {
-    v := (*heap)[0]
-    swap(&(*heap)[0], &(*heap)[len(*heap) - 1])
-    *heap = (*heap)[:(len(*heap) - 1)]
-    convertMaxHeapAfterPop(heap, 0)
-    return v
-}
-
-func convertMaxHeapAfterPop(heap *[]int, idx int) {
-    parent := idx
-    leftChild := idx*2 + 1 // 수정
-    rightChild := idx*2 + 2 // 수정
-    
-    if leftChild > len(*heap) - 1 {
-        return
-    } else {
-        maxChild := leftChild
-        if rightChild <= len(*heap) - 1  && (*heap)[rightChild] > (*heap)[leftChild] {
-            maxChild = rightChild
+    for index > 0 {
+        parentIndex := (index - 1) / 2
+        if (*h)[parentIndex] >= (*h)[index] {
+            break
         }
-        
-        if (*heap)[parent] < (*heap)[maxChild] {
-            swap(&(*heap)[parent], &(*heap)[maxChild])
-            convertMaxHeapAfterPop(heap, maxChild)
-        }
+        (*h)[parentIndex], (*h)[index] = (*h)[index], (*h)[parentIndex]
+        index = parentIndex
     }
 }
 
-func swap(a *int, b *int) {
-    temp := *a
-    *a = *b
-    *b = temp
+func (h *MaxHeap) pop() (int) {
+    if len(*h) == 0 {
+        return 0
+    }
+
+    res := (*h)[0]
+    lastIndex := len(*h) - 1
+    (*h)[0] = (*h)[lastIndex]
+    (*h) = (*h)[:lastIndex]
+
+    index := 0
+    for {
+        leftChildIndex := 2*index + 1
+        rightChildIndex := 2*index + 2
+        largest := index
+
+        if leftChildIndex < len(*h) && (*h)[leftChildIndex] > (*h)[largest] {
+            largest = leftChildIndex
+        }
+        if rightChildIndex < len(*h) && (*h)[rightChildIndex] > (*h)[largest] {
+            largest = rightChildIndex
+        }
+        if largest == index {
+            break
+        }
+
+        (*h)[index], (*h)[largest] = (*h)[largest], (*h)[index]
+        index = largest
+    }
+
+    return res
 }
