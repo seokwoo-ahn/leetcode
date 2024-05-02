@@ -1,31 +1,20 @@
 func findMaxK(nums []int) int {
-    sort.Ints(nums)
+    m := make(map[int]bool)
+    res := -1
     
-    for i := len(nums) - 1; i >= 0; i-- {
-        start, end, target := 0, i, -nums[i]
+    for i := 0; i < len(nums); i++ {
+        v := nums[i]
         
-        if target < nums[start] {
-            continue
-        }
-        
-        if nums[i] < 0 {
-            return -1
-        }
-        
-        for start <= end {
-            mid := (start + end) / 2
-            
-            if nums[mid] == target {
-                return nums[i]
+        if m[-v] == true {
+            if v < 0 && -v > res {
+                res = -v
+            } else if v > res{
+                res = v
             }
-            
-            if target < nums[mid] {
-                end = mid - 1
-            } else {
-                start = mid + 1
-            }
-        }
+        } else {
+            m[v] = true
+        }  
     }
     
-    return -1
+    return res
 }
