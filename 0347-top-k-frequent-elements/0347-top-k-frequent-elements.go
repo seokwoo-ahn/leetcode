@@ -9,26 +9,22 @@ func topKFrequent(nums []int, k int) []int {
     for i := 0; i < len(nums); i++ {
         if value != nums[i] {
   		    heap.Push(q, element{value: value, count: cnt})
-            if q.Len() > k {
-                heap.Pop(q)
-            }
             value = nums[i]
             cnt = 1
         } else {
             cnt++
         }
-    }
-    
-    heap.Push(q, element{value: value, count: cnt})
-    if q.Len() > k {
-        heap.Pop(q)
+        
+        if i == len(nums) - 1 {
+            heap.Push(q, element{value: value, count: cnt})
+        }
     }
 
-	ans := make([]int, k, k)
-	for i := 1; i <= k; i++ {
+	ans := make([]int, k)
+	for i := 0; i < k; i++ {
 		v := heap.Pop(q)
 		if s, ok := v.(element); ok {
-			ans[k-i] = s.value
+			ans[i] = s.value
 		}
 	}
 	return ans
@@ -42,7 +38,7 @@ type element struct {
 type priorityQueue []element
 
 func (q priorityQueue) Len() int           { return len(q) }
-func (q priorityQueue) Less(i, j int) bool { return q[i].count < q[j].count }
+func (q priorityQueue) Less(i, j int) bool { return q[i].count > q[j].count }
 func (q priorityQueue) Swap(i, j int)      { q[i], q[j] = q[j], q[i] }
 
 func (q *priorityQueue) Push(x interface{}) {
